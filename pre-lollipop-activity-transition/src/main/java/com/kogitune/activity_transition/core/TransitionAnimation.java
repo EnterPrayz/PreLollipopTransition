@@ -57,11 +57,17 @@ public class TransitionAnimation {
         return moveData;
     }
 
-
     public static MoveData startViewAnimation(final ViewTransition transition) {
         final MoveData moveData = new MoveData();
         final View from = transition.getFrom();
         final View toView = transition.getTo();
+
+        if (transition.getAplha() != null) {
+            moveData.alpha = transition.getAplha();
+        } else {
+            moveData.alpha = new float[]{from.getAlpha(), toView.getAlpha()};
+        }
+
 
         moveData.toView = toView;
         moveData.duration = transition.getDuration();
@@ -91,7 +97,7 @@ public class TransitionAnimation {
                 toView.setRight(from.getRight());
                 toView.setTop(from.getTop());
                 toView.setBottom(from.getBottom());
-
+                toView.setAlpha(moveData.alpha[0]);
                 runEnterAnimation(moveData, transition.getInterpolator(), true);
 
             }
@@ -108,7 +114,9 @@ public class TransitionAnimation {
         toView.setTranslationX(moveData.leftDelta);
         toView.setTranslationY(moveData.topDelta);
         if (isView) {
-            toView.animate().setDuration(moveData.duration).
+            toView.animate()
+                    .setDuration(moveData.duration).
+                    alpha(moveData.alpha[1]).
                     scaleX(1).scaleY(1).
                     translationX(0).translationY(0).
                     setInterpolator(interpolator);
@@ -140,16 +148,25 @@ public class TransitionAnimation {
         }
     }
 
-    public static void startExitAnimation(MoveData moveData, final Runnable endAction) {
+    public static void startExitAnimation(MoveData moveData, boolean isView, final Runnable endAction) {
         View view = moveData.toView;
         int duration = moveData.duration;
         int leftDelta = moveData.leftDelta;
         int topDelta = moveData.topDelta;
         float widthScale = moveData.widthScale;
         float heightScale = moveData.heightScale;
-        view.animate().setDuration(duration).
-                scaleX(widthScale).scaleY(heightScale).
-                translationX(leftDelta).translationY(topDelta);
+        if (isView) {
+            view.setAlpha(moveData.alpha[1]);
+            view.animate().setDuration(duration).
+                    alpha(moveData.alpha[0]).
+                    scaleX(widthScale).scaleY(heightScale).
+                    translationX(leftDelta).translationY(topDelta);
+        } else {
+            view.animate().setDuration(duration).
+                    scaleX(widthScale).scaleY(heightScale).
+                    translationX(leftDelta).translationY(topDelta);
+        }
+
         if (endAction != null) {
             view.postDelayed(endAction, duration);
         }

@@ -16,13 +16,15 @@ public class ViewTransition {
     private int duration = 300;
     private TimeInterpolator interpolator;
     private String imagePath;
+    private float[] aplha;
 
-    public ViewTransition(View from, View to, int duration, TimeInterpolator interpolator, String imagePath) {
+    public ViewTransition(View from, View to, int duration, TimeInterpolator interpolator, String imagePath, float[] alpha) {
         this.from = from;
         this.to = to;
         this.duration = duration;
         this.interpolator = interpolator;
         this.imagePath = imagePath;
+        this.aplha = alpha;
     }
 
     public ExitViewTransition start() {
@@ -50,6 +52,10 @@ public class ViewTransition {
         return interpolator;
     }
 
+    public float[] getAplha() {
+        return aplha;
+    }
+
     public static Builder with(View from, View to) {
         return Builder.build(from, to);
     }
@@ -61,7 +67,7 @@ public class ViewTransition {
         private int duration = 300;
         private String imagePath;
         private TimeInterpolator interpolator;
-
+        private float[] aplha;
 
         private static Builder build(View from, View to) {
             return new Builder(from, to);
@@ -83,13 +89,18 @@ public class ViewTransition {
             return this;
         }
 
+        public Builder aplpha(int from, int to) {
+            this.aplha = new float[]{from, to};
+            return this;
+        }
+
         public Builder withInterpolator(TimeInterpolator interpolator) {
             this.interpolator = interpolator;
             return this;
         }
 
         public ViewTransition create() {
-            return new ViewTransition(from, to, duration, interpolator, imagePath);
+            return new ViewTransition(from, to, duration, interpolator, imagePath, aplha);
         }
     }
 

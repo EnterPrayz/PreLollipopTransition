@@ -13,6 +13,8 @@ public class SubActivity extends ActionBarActivity {
 
     private ExitActivityTransition exitTransition;
     private ExitViewTransition viewExit;
+    private ExitViewTransition viewExit1;
+    private ExitViewTransition backGroundAnimExit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,13 +22,25 @@ public class SubActivity extends ActionBarActivity {
         setContentView(R.layout.activity_sub);
         exitTransition = ActivityTransition
                 .with(getIntent())
-                .duration(10000)
+                .duration(500)
                 .to(findViewById(R.id.sub_imageView))
                 .start(savedInstanceState);
 
+        backGroundAnimExit = ViewTransition
+                .with(findViewById(R.id.bg_from), findViewById(R.id.bg_to))
+                .withDuration(300)
+                .create()
+                .start();
+
         viewExit = ViewTransition
                 .with(findViewById(R.id.from_inner_image), findViewById(R.id.to_inner_image))
-                .withDuration(7000)
+                .withDuration(300)
+                .create()
+                .start();
+
+        viewExit1 = ViewTransition
+                .with(findViewById(R.id.from_inner_image1), findViewById(R.id.to_inner_image1))
+                .withDuration(400)
                 .create()
                 .start();
 
@@ -42,5 +56,7 @@ public class SubActivity extends ActionBarActivity {
     public void onBackPressed() {
         exitTransition.exit(this);
         viewExit.exit();
+        viewExit1.exit();
+        backGroundAnimExit.exit();
     }
 }

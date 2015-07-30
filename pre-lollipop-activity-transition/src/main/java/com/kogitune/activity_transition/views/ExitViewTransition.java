@@ -14,6 +14,6 @@ public class ExitViewTransition {
     }
 
     public void exit() {
-        TransitionAnimation.startExitAnimation(moveData, null);
+        TransitionAnimation.startExitAnimation(moveData, true, null);
     }
 }

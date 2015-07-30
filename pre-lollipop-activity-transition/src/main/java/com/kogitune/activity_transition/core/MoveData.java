@@ -12,5 +12,6 @@ public class MoveData {
     public float widthScale;
     public float heightScale;
     public int duration = 1000;
+    public float[] alpha;
     public View toView;
 }

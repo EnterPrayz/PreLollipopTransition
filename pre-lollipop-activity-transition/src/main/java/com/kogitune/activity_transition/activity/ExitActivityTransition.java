@@ -17,7 +17,7 @@ public class ExitActivityTransition {
     }
 
     public void exit(final Activity activity) {
-        TransitionAnimation.startExitAnimation(moveData, new Runnable() {
+        TransitionAnimation.startExitAnimation(moveData, false, new Runnable() {
             @Override
             public void run() {
                 activity.finish();

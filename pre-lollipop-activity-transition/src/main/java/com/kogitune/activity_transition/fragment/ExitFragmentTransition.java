@@ -42,7 +42,7 @@ public class ExitFragmentTransition {
                     if (event.getAction() != KeyEvent.ACTION_UP) {
                         return true;
                     }
-                    TransitionAnimation.startExitAnimation(moveData, new Runnable() {
+                    TransitionAnimation.startExitAnimation(moveData, false, new Runnable() {
                         @Override
                         public void run() {
                             if (popBackStackRunnable != null) {
