@@ -5,16 +5,11 @@ import android.support.v7.app.ActionBarActivity;
 
 import com.kogitune.activity_transition.activity.ActivityTransition;
 import com.kogitune.activity_transition.activity.ExitActivityTransition;
-import com.kogitune.activity_transition.views.ExitViewTransition;
-import com.kogitune.activity_transition.views.ViewTransition;
 
 
 public class SubActivity extends ActionBarActivity {
 
     private ExitActivityTransition exitTransition;
-    private ExitViewTransition viewExit;
-    private ExitViewTransition viewExit1;
-    private ExitViewTransition backGroundAnimExit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,23 +21,6 @@ public class SubActivity extends ActionBarActivity {
                 .to(findViewById(R.id.sub_imageView))
                 .start(savedInstanceState);
 
-        backGroundAnimExit = ViewTransition
-                .with(findViewById(R.id.bg_from), findViewById(R.id.bg_to))
-                .withDuration(300)
-                .create()
-                .start();
-
-        viewExit = ViewTransition
-                .with(findViewById(R.id.from_inner_image), findViewById(R.id.to_inner_image))
-                .withDuration(300)
-                .create()
-                .start();
-
-        viewExit1 = ViewTransition
-                .with(findViewById(R.id.from_inner_image1), findViewById(R.id.to_inner_image1))
-                .withDuration(400)
-                .create()
-                .start();
 
     }
 
@@ -55,8 +33,6 @@ public class SubActivity extends ActionBarActivity {
     @Override
     public void onBackPressed() {
         exitTransition.exit(this);
-        viewExit.exit();
-        viewExit1.exit();
-        backGroundAnimExit.exit();
+
     }
 }

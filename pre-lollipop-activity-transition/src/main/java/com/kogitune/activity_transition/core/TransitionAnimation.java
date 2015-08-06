@@ -87,8 +87,8 @@ public class TransitionAnimation {
                 int[] screenLocation = new int[2];
                 toView.getLocationOnScreen(screenLocation);
 
-                moveData.leftDelta = transitionData.thumbnailLeft - screenLocation[0];
-                moveData.topDelta = transitionData.thumbnailTop - screenLocation[1];
+                moveData.leftDelta = (float) transitionData.thumbnailLeft - screenLocation[0];
+                moveData.topDelta = (float) transitionData.thumbnailTop - screenLocation[1];
 
                 moveData.widthScale = (float) transitionData.thumbnailWidth / toView.getWidth();
                 moveData.heightScale = (float) transitionData.thumbnailHeight / toView.getHeight();
@@ -107,8 +107,8 @@ public class TransitionAnimation {
 
     private static void runEnterAnimation(MoveData moveData, TimeInterpolator interpolator, boolean isView) {
         final View toView = moveData.toView;
-        toView.setPivotX(0);
-        toView.setPivotY(0);
+        toView.setPivotX(0.5f);
+        toView.setPivotY(0.5f);
         toView.setScaleX(moveData.widthScale);
         toView.setScaleY(moveData.heightScale);
         toView.setTranslationX(moveData.leftDelta);
@@ -138,7 +138,14 @@ public class TransitionAnimation {
         }
         if (toView instanceof ImageView) {
             final ImageView toImageView = (ImageView) toView;
+
+         /*   RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                    RelativeLayout.LayoutParams.WRAP_CONTENT,
+                    RelativeLayout.LayoutParams.WRAP_CONTENT
+            );
+            toImageView.setLayoutParams(layoutParams);*/
             toImageView.setImageBitmap(bitmap);
+
         } else {
             if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN) {
                 toView.setBackground(new BitmapDrawable(toView.getResources(), bitmap));
@@ -151,8 +158,8 @@ public class TransitionAnimation {
     public static void startExitAnimation(MoveData moveData, boolean isView, final Runnable endAction) {
         View view = moveData.toView;
         int duration = moveData.duration;
-        int leftDelta = moveData.leftDelta;
-        int topDelta = moveData.topDelta;
+        float leftDelta = moveData.leftDelta;
+        float topDelta = moveData.topDelta;
         float widthScale = moveData.widthScale;
         float heightScale = moveData.heightScale;
         if (isView) {
