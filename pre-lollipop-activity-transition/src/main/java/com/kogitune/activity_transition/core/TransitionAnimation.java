@@ -169,6 +169,8 @@ public class TransitionAnimation {
                     scaleX(widthScale).scaleY(heightScale).
                     translationX(leftDelta).translationY(topDelta);
         } else {
+            view.setPivotX(0.5f);
+            view.setPivotY(0.5f);
             view.animate().setDuration(duration).
                     scaleX(widthScale).scaleY(heightScale).
                     translationX(leftDelta).translationY(topDelta);
